@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "9504a70c-3006-4b51-b407-d4034ce00276",
+		"name": "Next Engineering QA Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23777377"
+	},
+	"item": [
+		{
+			"name": "JSon Schema Validation including due_on validation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Aqui estou criando a schema onde consigo validar todos os campos que esperamos na resposta e seus tipos. Além disso, coloco aqui que todos os campos devem ser obrigatórios, dessa forma, se um desses campos estiver faltando, conseguiremos identificar \r",
+							"const schema = {\r",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+							"  \"items\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": \r",
+							"      {\r",
+							"          \"id\": { \"type\": \"integer\" },\r",
+							"          \"user_id\": { \"type\": \"integer\" },\r",
+							"          \"title\": { \"type\": \"string\" },\r",
+							"          \"due_on\": { \"type\": \"string\" , \"format\": \"date-time\"},\r",
+							"          \"status\": { \"type\": \"string\" }\r",
+							"      },\r",
+							"      \"required\": [\"id\", \"user_id\", \"title\", \"due_on\", \"status\"]\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"//Depois de termos a schema pronta, estou fazendo o teste para verificar se a resposta que temos está correta e se todos os campos estão preenchidos com os tipos e formatos corretos. \r",
+							"pm.test(\"Validando resposta JSON e verificando os se os campos estão corretos\", () => {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/todos",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status Validation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Aqui estou armazenando a resposta do JSON em uma variável\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Estou iniciando a variável \"completed\" como true para usá-la na verificação se todos os status são \"completed\"\r",
+							"var completed = true;\r",
+							"\r",
+							"// Aqui estou passando por sobre cada item do JSON para verificar o campo \"status\" e iterando sobre cada resoposta. No caso de o status não ser \"completed\", a variável passa a ser false\r",
+							"jsonData.forEach(function(item) {\r",
+							"    if (item.status !== \"completed\") {\r",
+							"        completed = false;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Por fim, faço a verificação se todos os status estão como \"completed\" (true), caso tenha algum false, o teste vai valhar\r",
+							"pm.test(\"Todos os status são 'completed'\", function () {\r",
+							"    pm.expect(completed).to.be.true;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/todos",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"todos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
