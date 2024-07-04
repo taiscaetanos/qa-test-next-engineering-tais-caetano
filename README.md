@@ -8,18 +8,18 @@
 
 *Resposta:* O objetivo dos casos de testes é conseguir visualizar que a API está retornando os dados esperados nos formatos esperados na requisição que foi feita. Além disso, ajudam a identificar problemas em lugares específicos quando alguma coisa não estiver retornando da maneira correta, ajudando assim a encontrar e solucionar o problema com mais eficácia.
 
-Nos testes realizados nessa API, mais especificamente com a resposta da requisição gorest.co.in/public/v2/todos, estou validando que os campos estejam sendo preenchidos com os tipos certos de dados e no formato correto.
+Nos testes realizados nesse endpoint, mais especificamente com a resposta da requisição gorest.co.in/public/v2/todos, estou validando que os campos estejam sendo preenchidos com os tipos certos de dados e no formato correto.
 
 Campos como ```"id"``` e ```"user_id"``` são campos numéricos então devem sempre conter respostas com números inteiros. Os outros campos como ```"title", "due_on"``` e ```"status"``` devem conter textos, no caso, strings.
 
 No caso do campo ```"due_on"```, valido também que esteja no formato date-time que é a data e a hora.
-Além disso, valido também se o campo "status" está com a informação "completed" em todas as respostas. No caso dessa resposta da API, existem alguns como "pending", portanto o teste não vai passar por não serem todos "completed".
+Além disso, valido também se o campo "status" está com a informação "completed" em todas as respostas. No caso dessa resposta do endpoint, existem alguns como "pending", portanto o teste não vai passar por não serem todos "completed".
 Se algum desses campos receber alguma informação diferente dos formatos validados no schema, então os testes vão falhar e vamos conseguir identificar onde estava a resposta incorreta.
 
 **3. Em automação, com resposta desta API gorest.co.in/public/v2/todos**
   * **3.1. Aplica uma validação de schema ao resultado;**
     
-*Resposta:* A utilização de schema valida se os campos da resposta estão preenchidos no formato correto. Considerando isso e verificando a resposta da API, vemos que temos os campos ```"id", "user_id", "title", "due_on"``` e ```"status"``` sendo ```"id"``` e ```"user_id"``` do tipo integer e ```"title", "due_on"``` e ```"status"``` do tipo string, portanto, fiz a validação conforme o código também disponível aqui no repositório. 
+*Resposta:* A utilização de schema valida se os campos da resposta estão preenchidos no formato correto. Considerando isso e verificando a resposta do endpoint, vemos que temos os campos ```"id", "user_id", "title", "due_on"``` e ```"status"``` sendo ```"id"``` e ```"user_id"``` do tipo integer e ```"title", "due_on"``` e ```"status"``` do tipo string, portanto, fiz a validação conforme o código também disponível aqui no repositório. 
 De acordo com o teste, se alterarmos o tipo de uma das propriedades para um diferente do que realmente é, o teste não vai passar. Por exemplo, se colocarmos o ```“id”``` com o type string, o teste não vai passar já que o formato que deve aparecer nas respostas é o tipo integer. Isso consegue validar se as respostas estão sempre vindo no tipo esperado.
 
   * **3.2. Valida se todos os resultados têm status completed;**
